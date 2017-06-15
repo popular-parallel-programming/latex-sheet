@@ -1,0 +1,44 @@
+\usepackage[table]{xcolor} % Apparently has to appear before 'booktabs'
+\usepackage{colortbl}
+\usepackage{newfloat}
+\usepackage{multirow}
+\usepackage{longtable, tabu}
+\usepackage{tabularx}
+
+% Define a new sheet environment
+\DeclareFloatingEnvironment[
+    listname=List of Spreadsheets,
+    name=Sheet,
+    placement={tbhp!}
+]{sheet}
+
+% Make cleveref recognise sheet environments
+\crefname{sheet}{sheet}{sheets}
+\Crefname{sheet}{Sheet}{Sheets}
+
+% Colors and commands for creating Funcalc sheets
+\definecolor{lightpink}{RGB}{255,182,193}
+\definecolor{lightgreen}{RGB}{144,238,144}
+\definecolor{lightcyan}{RGB}{224,255,255}
+\definecolor{lightblue}{RGB}{135,206,250}
+\newcolumntype{g}{>{\columncolor{gray!15}}c}
+\newcolumntype{f}{>{\columncolor{lightpink}}c}
+\newcommand{\col}[1]{\multicolumn{1}{c|}{#1}}
+\newcommand{\ns}{\rowcolor{gray!15}}
+\newcommand{\fs}{\rowcolor{lightpink}}
+\newcommand{\farg}{\cellcolor{lightgreen}}
+\newcommand{\ftemp}{\cellcolor{lightcyan}}
+\newcommand{\result}{\cellcolor{lightblue}}
+
+% Example sheet
+\begin{sheet}[h!]
+    \centering
+    \begin{tabular}{|f|c|c|}
+        \hline
+        \fs & \col{A} & \col{B}\\\hline
+        1 & \texttt{=DEFINE("fatorial", B3, B2)} & \\\hline
+        2 & \texttt{\textquotesingle{}n=}        & \farg\texttt{0}\\\hline
+        3 & \texttt{\textquotesingle{}out=}      & \result\texttt{=IF(B2<=0, 1, B2*FACTORIAL(B2-1))}\\\hline
+    \end{tabular}
+    \caption{Computing the factorial using recursion in Funcalc.}\label{sheet:factorial}
+\end{sheet}
