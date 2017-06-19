@@ -1,20 +1,56 @@
-\usepackage[table]{xcolor} % Apparently has to appear before 'booktabs'
-\usepackage{colortbl}
-\usepackage{newfloat}
-\usepackage{multirow}
-\usepackage{longtable, tabu}
-\usepackage{tabularx}
+% latex-sheet package v0.1.0
+%
+% Provides a new environment and commands for prettyfying and manipulating spreadsheets in
+% LaTeX.
+%
+% Example sheet:
+% \begin{sheet}[h!]
+%     \centering
+%     \begin{tabular}{|f|c|c|}
+%         \hline
+%         \fs & \col{A} & \col{B}\\\hline
+%         1 & \texttt{=DEFINE("fatorial", B3, B2)} & \\\hline
+%         2 & \texttt{\textquotesingle{}n=}        & \farg\texttt{0}\\\hline
+%         3 & \texttt{\textquotesingle{}out=}      & \result\texttt{=IF(B2<=0, 1, B2*FACTORIAL(B2-1))}\\\hline
+%     \end{tabular}
+%     \caption{Computing the factorial using recursion in Funcalc.}\label{sheet:factorial}
+% \end{sheet}
 
-% Define a new sheet environment
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{latex-sheet}
+
+% Declare package requirements
+\RequirePackage{xcolor}
+\RequirePackage{colortbl}
+\RequirePackage{newfloat}
+\RequirePackage{multirow}
+\RequirePackage{longtable}
+\RequirePackage{tabu}
+\RequirePackage{tabularx}
+
+% Declare package options
+%\DeclareOption{...}
+%\ExecuteOptions{...}
+%\ProcessOptions\relax
+
+% Define two new sheet environments
 \DeclareFloatingEnvironment[
     listname=List of Spreadsheets,
     name=Sheet,
     placement={tbhp!}
 ]{sheet}
 
+\DeclareFloatingEnvironment[
+    listname=List of Function Sheets,
+    name=Function Sheet,
+    placement={tbhp!}
+]{funsheet}
+
 % Make cleveref recognise sheet environments
 \crefname{sheet}{sheet}{sheets}
 \Crefname{sheet}{Sheet}{Sheets}
+\crefname{funsheet}{function sheet}{function sheets}
+\Crefname{funsheet}{Function sheet}{Function sheets}
 
 % Colors and commands for creating Funcalc sheets
 \definecolor{lightpink}{RGB}{255,182,193}
@@ -30,15 +66,5 @@
 \newcommand{\ftemp}{\cellcolor{lightcyan}}
 \newcommand{\result}{\cellcolor{lightblue}}
 
-% Example sheet
-\begin{sheet}[h!]
-    \centering
-    \begin{tabular}{|f|c|c|}
-        \hline
-        \fs & \col{A} & \col{B}\\\hline
-        1 & \texttt{=DEFINE("fatorial", B3, B2)} & \\\hline
-        2 & \texttt{\textquotesingle{}n=}        & \farg\texttt{0}\\\hline
-        3 & \texttt{\textquotesingle{}out=}      & \result\texttt{=IF(B2<=0, 1, B2*FACTORIAL(B2-1))}\\\hline
-    \end{tabular}
-    \caption{Computing the factorial using recursion in Funcalc.}\label{sheet:factorial}
-\end{sheet}
+% NOTE: MUST be the last command
+\endinput
